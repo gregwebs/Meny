@@ -6,29 +6,14 @@
  * Created by Hakim El Hattab, http://hakim.se
  */
 
-* {
-	margin: 0;
-	padding: 0;
-}
-
-html, 
+html,
 body {
 	height: 100%;
 	overflow: hidden;
 }
 
-body {
-	background-color: #222;
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAGklEQVQIW2NkYGD4D8SMQAwGcAY2AbBKDBUAVuYCBQPd34sAAAAASUVORK5CYII=);
-	background-repeat: repeat;
-
-	font-family: 'Lato', Helvetica, sans-serif;
-	font-size: 16px;
-	color: #222;
-}
-
-/** 
-  * Element which wraps all of the other .meny parts 
+/**
+  * Element which wraps all of the other .meny parts
   */
 .meny-wrapper {
 	-webkit-perspective: 800;
@@ -63,7 +48,7 @@ body {
 	        transform-origin: 0% 50%;
 }
 
-/** 
+/**
  * The menu element which expands out from the left.
  */
 .meny {
@@ -73,7 +58,7 @@ body {
 	width: 300px;
 	z-index: 1;
 	margin: 0px;
-	padding: 20px;
+	overflow-y: auto;
 
 	-webkit-transform: rotateY( -30deg ) translateX( -97% );
 	   -moz-transform: rotateY( -30deg ) translateX( -97% );
@@ -92,12 +77,11 @@ body {
 		        transform: rotateY( 0deg );
 	}
 
-/** 
+/**
  * Page contents which gets pushed aside while meny is active.
  */
 .meny-contents {
 	background: #eee;
-	padding: 20px 40px;
 	width: 100%;
 	height: 100%;
 	overflow-y: auto;
@@ -111,7 +95,7 @@ body {
 	}
 
 /**
- * A shadow-like element placed on top of the contents while 
+ * A shadow-like element placed on top of the contents while
  * meny is active.
  */
 .meny-contents .cover {
@@ -150,19 +134,21 @@ body {
  * Graphic that highlights menu availability while inactive.
  */
 .meny-arrow {
+  /*
 	position: absolute;
-	top: 45%;
+	top: 90%;
 	left: 12px;
+    */
 	z-index: 10;
 	font-family: sans-serif;
 
-	font-size: 20px;
-	color: #333;
+	font-size: 11px;
+	color: hsl(0, 0%, 63%);
 
-	-webkit-transition: left 0.8s cubic-bezier(0.680, -0.550, 0.265, 1.550); 
-	   -moz-transition: left 0.8s cubic-bezier(0.680, -0.550, 0.265, 1.550); 
-	    -ms-transition: left 0.8s cubic-bezier(0.680, -0.550, 0.265, 1.550); 
-	     -o-transition: left 0.8s cubic-bezier(0.680, -0.550, 0.265, 1.550); 
+	-webkit-transition: left 0.8s cubic-bezier(0.680, -0.550, 0.265, 1.550);
+	   -moz-transition: left 0.8s cubic-bezier(0.680, -0.550, 0.265, 1.550);
+	    -ms-transition: left 0.8s cubic-bezier(0.680, -0.550, 0.265, 1.550);
+	     -o-transition: left 0.8s cubic-bezier(0.680, -0.550, 0.265, 1.550);
 	        transition: left 0.8s cubic-bezier(0.680, -0.550, 0.265, 1.550);
 }
 	.meny-active .meny-arrow {
@@ -302,14 +288,16 @@ a {
 		color: #f76f76;
 	}
 
-h1, 
+h1,
 h2 {
 	font-size: 24px;
 }
 
 .meny {
+  /*
 	background: #333;
 	color: #eee;
+    */
 }
 	.meny ul {
 		margin-top: 10px;
@@ -325,6 +313,7 @@ h2 {
 				color: rgba( 255, 255, 255, 0.2 );
 			}
 
+/*
 .meny-contents>article {
 	max-width: 400px;
 }
@@ -349,5 +338,4 @@ h2 {
 	position: absolute;
 	bottom: 20px;
 }
-
-
+*/

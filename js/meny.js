@@ -6,23 +6,25 @@
  * Created by Hakim El Hattab, http://hakim.se
  */
 (function(){
-
-	var meny = document.querySelector( '.meny' );
+	var meny = document.getElementsByClassName('meny')[0];
 
 	// Avoid throwing errors if the script runs on a page with 
 	// no .meny
-	if( !meny || !meny.parentNode ) { return; }
+	if( !meny || !meny.parentNode ) {
+      console.log('no meny found');
+      return;
+    }
 
 	var menyWrapper = meny.parentNode;
 	
 	// Add a class to identify the parent of the meny parts
 	menyWrapper.className += ' meny-wrapper';
 
-	var indentX = menyWrapper.offsetLeft,
-		activateX = 40,
-		deactivateX = meny.offsetWidth || 300,
-		touchStartX = null,
-		touchMoveX = null,
+	var //indentX = menyWrapper.offsetLeft,
+		//activateX = 40,
+		//deactivateX = meny.offsetWidth || 300,
+		//touchStartX = null,
+		//touchMoveX = null,
 		isActive = false,
 		isMouseDown = false;
 
@@ -32,14 +34,10 @@
 								'OPerspective' in document.body.style ||
 								'perspective' in document.body.style;
 
-	document.addEventListener( 'mousedown', onMouseDown, false );
-	document.addEventListener( 'mouseup', onMouseUp, false );
-	document.addEventListener( 'mousemove', onMouseMove, false );
+    /*
 	document.addEventListener( 'touchstart', onTouchStart, false );
 	document.addEventListener( 'touchend', onTouchEnd, false );
-	window.addEventListener( 'hashchange', onHashChange, false );
-
-	onHashChange();
+    */
 
 	// Fall back to more basic CSS
 	if( !supports3DTransforms ) {
@@ -48,29 +46,7 @@
 
 	document.documentElement.className += ' meny-ready';
 
-	function onMouseDown( event ) {
-		isMouseDown = true;
-	}
-
-	function onMouseMove( event ) {
-		// Prevent opening/closing when mouse is down since 
-		// the user may be selecting text
-		if( !isMouseDown ) {
-			var x = event.clientX - indentX;
-
-			if( x > deactivateX ) {
-				deactivate();
-			}
-			else if( x < activateX ) {
-				activate();
-			}
-		}
-	}
-
-	function onMouseUp( event ) {
-		isMouseDown = false;
-	}
-
+    /*
 	function onTouchStart( event ) {
 		touchStartX = event.touches[0].clientX - indentX;
 		touchMoveX = null;
@@ -79,7 +55,6 @@
 			document.addEventListener( 'touchmove', onTouchMove, false );
 		}
 	}
-
 	function onTouchMove( event ) {
 		touchMoveX = event.touches[0].clientX - indentX;
 
@@ -92,7 +67,6 @@
 			event.preventDefault();
 		}
 	}
-
 	function onTouchEnd( event ) {
 		document.addEventListener( 'touchmove', onTouchMove, false );
 
@@ -108,40 +82,22 @@
 			}
 		}
 	}
+    */
 
-	function onHashChange( event ) {
-		if( window.location.hash.match( 'fold' ) && !document.body.className.match( 'meny-fold' ) ) {
-			addClass( document.body, 'meny-fold' );
-
-			var clone = document.createElement( 'div' );
-			clone.className = 'meny right';
-			clone.innerHTML = meny.innerHTML + '<div class="cover"></div>';
-			document.body.appendChild( clone );
-
-			addClass( meny, 'left' );
-		}
-		else {
-			removeClass( document.body, 'meny-fold' );
-
-			var clone = document.querySelector( '.meny.right' );
-
-			if( clone ) {
-				clone.parentNode.removeChild( clone );
-			}
-		}
-	}
-
-	function activate() {
+	activate = function() {
 		if( isActive === false ) {
 			isActive = true;
 			addClass( document.documentElement, 'meny-active' );
-		}
+		} else {
+          deactivate()
+        }
 	}
 
-	function deactivate() {
+	var deactivate = function() {
 		if( isActive === true ) {
 			isActive = false;
 			removeClass( document.documentElement, 'meny-active' );
+            //Yap.fire('meny-deactivated');
 		}
 	}
 
@@ -153,5 +109,29 @@
 		element.className = element.className.replace( name, '' );
 	}
 
+
+    window.Meny = {
+      deactivate: deactivate,
+      activate: activate
+    }
+
+    var attach_event = function(el, ev, cb){
+      if (el.addEventListener) {
+          el.addEventListener(ev, cb, false);
+      } else if (el.attachEvent)  {
+          el.attachEvent(ev, cb);
+      }
+    }
+    var meny_contents = document.getElementsByClassName('meny-contents')[0];
+    attach_event(meny_contents, 'click', deactivate);
+    attach_event(meny_contents, 'onTouchEnd', deactivate);
+
+    /*
+    Meny.activateArrow = function(){
+      var meny_arrow = document.getElementsByClassName('meny-arrow')[0];
+      attach_event(meny_arrow, 'click', activate, false);
+      attach_event(meny_arrow, 'onTouchEnd', activate, false);
+    }
+    */
 })();
 
